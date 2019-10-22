@@ -1,0 +1,96 @@
+------------------------2019-10-16 12:20:31-----------------------------
+----------------------------path queries--------------------------------
+historical queries: 10000, cache capacity: 500000 , queries: 1000.  cache hit ratio: 1.00% , response time: 84 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 1500.  cache hit ratio: 1.60% , response time: 30 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 2000.  cache hit ratio: 1.90% , response time: 24 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 2500.  cache hit ratio: 1.88% , response time: 24 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.0333% , response time: 29 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 3500.  cache hit ratio: 1.7429% , response time: 31 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 4000.  cache hit ratio: 1.725% , response time: 35 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 4500.  cache hit ratio: 1.7333% , response time: 38 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 5000.  cache hit ratio: 1.90% , response time: 41 ms.
+---------------------------cache capacity-------------------------------
+historical queries: 10000, cache capacity: 150000 , queries: 3000.  cache hit ratio: 1.0667% , response time: 21 ms.
+historical queries: 10000, cache capacity: 200000 , queries: 3000.  cache hit ratio: 1.10% , response time: 19 ms.
+historical queries: 10000, cache capacity: 250000 , queries: 3000.  cache hit ratio: 1.3667% , response time: 24 ms.
+historical queries: 10000, cache capacity: 300000 , queries: 3000.  cache hit ratio: 1.4667% , response time: 24 ms.
+historical queries: 10000, cache capacity: 350000 , queries: 3000.  cache hit ratio: 1.00% , response time: 24 ms.
+historical queries: 10000, cache capacity: 400000 , queries: 3000.  cache hit ratio: 1.60% , response time: 27 ms.
+historical queries: 10000, cache capacity: 450000 , queries: 3000.  cache hit ratio: 1.6667% , response time: 27 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.6333% , response time: 26 ms.
+-------------------------historical queries--- -------------------------
+historical queries: 5000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.90% , response time: 26 ms.
+historical queries: 6000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.80% , response time: 31 ms.
+historical queries: 7000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.5667% , response time: 28 ms.
+historical queries: 8000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.0667% , response time: 30 ms.
+historical queries: 9000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.0333% , response time: 30 ms.
+historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.4333% , response time: 26 ms.
+historical queries: 11000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.60% , response time: 26 ms.
+historical queries: 12000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.5667% , response time: 28 ms.
+historical queries: 13000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.40% , response time: 25 ms.
+historical queries: 14000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8667% , response time: 28 ms.
+historical queries: 15000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.90% , response time: 26 ms.
+------------------------2019-10-17 00:41:40-----------------------------
+------------------------------------------------------------------------
+
+------------------------2019-10-17 09:51:09-----------------------------
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 2000.  cache hit ratio: 2.05% , response time: 244 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 2500.  cache hit ratio: 1.68% , response time: 69 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 1000.  cache hit ratio: 1.9% , response time: 18 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 1500.  cache hit ratio: 1.8% , response time: 41 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8667% , response time: 46 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 3500.  cache hit ratio: 1.5143% , response time: 50 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 4500.  cache hit ratio: 1.7333% , response time: 79 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 5000.  cache hit ratio: 1.84% , response time: 74 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 150000 , queries: 3000.  cache hit ratio: 0.5333% , response time: 31 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 4000.  cache hit ratio: 1.8% , response time: 54 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 250000 , queries: 3000.  cache hit ratio: 1.6% , response time: 37 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 200000 , queries: 3000.  cache hit ratio: 1.1333% , response time: 32 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 350000 , queries: 3000.  cache hit ratio: 1.6667% , response time: 35 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 300000 , queries: 3000.  cache hit ratio: 1.2667% , response time: 37 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 400000 , queries: 3000.  cache hit ratio: 1.5% , response time: 39 ms.
+type:historical queries --- historical queries: 5000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8% , response time: 42 ms.
+type:historical queries --- historical queries: 6000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.0667% , response time: 39 ms.
+type:historical queries --- historical queries: 7000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.5% , response time: 54 ms.
+type:historical queries --- historical queries: 8000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.1% , response time: 47 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 450000 , queries: 3000.  cache hit ratio: 1.6% , response time: 35 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.2667% , response time: 46 ms.
+type:historical queries --- historical queries: 9000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.9333% , response time: 46 ms.
+type:historical queries --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8333% , response time: 44 ms.
+type:historical queries --- historical queries: 11000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.9333% , response time: 46 ms.
+type:historical queries --- historical queries: 12000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8667% , response time: 37 ms.
+type:historical queries --- historical queries: 13000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.6% , response time: 25 ms.
+type:historical queries --- historical queries: 14000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.4667% , response time: 26 ms.
+type:historical queries --- historical queries: 15000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.5333% , response time: 33 ms.
+------------------------------------------------------------------------
+------------------------2019-10-18 09:25:34-----------------------------
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 2000.  cache hit ratio: 1.4% , response time: 215 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 1500.  cache hit ratio: 1.8% , response time: 31 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 2500.  cache hit ratio: 1.8% , response time: 37 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.9333% , response time: 39 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 1000.  cache hit ratio: 2.2% , response time: 12 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 4000.  cache hit ratio: 1.925% , response time: 55 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 3500.  cache hit ratio: 1.9714% , response time: 45 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 150000 , queries: 3000.  cache hit ratio: 0.9333% , response time: 29 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 4500.  cache hit ratio: 2.0444% , response time: 64 ms.
+type:path queries --- historical queries: 10000, cache capacity: 500000 , queries: 5000.  cache hit ratio: 1.68% , response time: 64 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 250000 , queries: 3000.  cache hit ratio: 1.2% , response time: 31 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 200000 , queries: 3000.  cache hit ratio: 1.0333% , response time: 30 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 350000 , queries: 3000.  cache hit ratio: 1.2333% , response time: 36 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 400000 , queries: 3000.  cache hit ratio: 1.1667% , response time: 40 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 300000 , queries: 3000.  cache hit ratio: 1.2667% , response time: 49 ms.
+type:historical queries --- historical queries: 5000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.9333% , response time: 42 ms.
+type:historical queries --- historical queries: 6000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8667% , response time: 37 ms.
+type:historical queries --- historical queries: 7000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.1% , response time: 38 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 450000 , queries: 3000.  cache hit ratio: 1.5333% , response time: 34 ms.
+type:cache capacity --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 2.1333% , response time: 43 ms.
+type:historical queries --- historical queries: 8000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.9% , response time: 39 ms.
+type:historical queries --- historical queries: 9000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.7% , response time: 36 ms.
+type:historical queries --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.9% , response time: 40 ms.
+type:historical queries --- historical queries: 11000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.5667% , response time: 40 ms.
+type:historical queries --- historical queries: 12000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.6667% , response time: 29 ms.
+type:historical queries --- historical queries: 13000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.5667% , response time: 35 ms.
+type:historical queries --- historical queries: 14000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.8667% , response time: 29 ms.
+type:historical queries --- historical queries: 15000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 1.7667% , response time: 37 ms.
+------------------------2019-10-18 17:10:07-----------------------------
+------------------------------------------------------------------------
