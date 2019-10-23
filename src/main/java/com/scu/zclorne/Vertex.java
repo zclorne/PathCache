@@ -36,6 +36,14 @@ public class Vertex {
         return false;
     }
 
+    public String getNid() {
+        return nid;
+    }
+
+    public void setNid(String nid) {
+        this.nid = nid;
+    }
+
     public double getLongitude() {
         return longitude;
     }

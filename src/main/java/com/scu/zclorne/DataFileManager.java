@@ -4,7 +4,9 @@ import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 public class DataFileManager {
     String dataDir = "/src/main/resources/";
@@ -74,26 +76,26 @@ public class DataFileManager {
     /**
      * read POI information from file
      */
-    HashMap<String, Vertex> readPOI() throws IOException {
+    List<double[]> readPOI() throws IOException {
         String filePath = System.getProperty("user.dir") + dataDir + "California's Points of Interest (Longitude, Latitude, Category ID).txt";
         BufferedReader in = null;
-        int count = 0;
-        HashMap<String, Vertex> poiMap = new HashMap<>();
+//        int count = 0;
+        List<double[]> pois = new ArrayList<>(110000);
         try {
             in = new BufferedReader(new FileReader(filePath));
             String str;
             String[] strings;
             while ((str = in.readLine()) != null) {
                 strings = str.split(" ");
-                poiMap.put(""+count,new Vertex(""+count,Double.parseDouble(strings[0]),Double.parseDouble(strings[1])));
-                count++;
+                pois.add(new double[]{Double.parseDouble(strings[0]),Double.parseDouble(strings[1])});
+//                count++;
             }
         } catch (IOException e) {
             e.printStackTrace();
         } finally {
             in.close();
         }
-        return poiMap;
+        return pois;
     }
 
 

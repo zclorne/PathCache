@@ -1,5 +1,6 @@
 package com.scu.zclorne;
 
+import com.scu.zclorne.kdtree.KDTree;
 import org.jgrapht.Graph;
 import org.jgrapht.GraphPath;
 import org.jgrapht.alg.shortestpath.DijkstraShortestPath;
@@ -11,6 +12,7 @@ import java.text.DecimalFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Random;
 import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;
@@ -19,6 +21,7 @@ import java.util.concurrent.TimeUnit;
 public class CacheTest {
 
     public static void main(String[] args) throws IOException {
+//        test(10000,500000, 3000,"path queries");
         cacheTestParallel();
     }
 
@@ -102,13 +105,20 @@ public class CacheTest {
      * @param pathQueries       查询条数
      */
     private static void test(int historicalQueries, int cacheCapacity, int pathQueries, String type) throws IOException {
-        //1. 构建无向图
+        //1. 构建无向图、kd-tree
+
+        //数据文件管理
         DataFileManager dataFileManager = new DataFileManager();
         HashMap<String, Vertex> vertexs = dataFileManager.readNode();
         HashMap<String, Edge> edges = dataFileManager.readEdge(vertexs);
+        List<double[]> pois = dataFileManager.readPOI();
+
+        KDTree kdTree = new KDTree(2);
         Graph<Vertex, Edge> graph = new DefaultUndirectedWeightedGraph<>(SupplierUtil.createSupplier(Vertex.class), SupplierUtil.createSupplier(Edge.class));
         vertexs.values().forEach((s) -> {
             graph.addVertex(s);
+            // 构建kd-tree
+            kdTree.insert(new double[]{s.getLongitude(),s.getLatitude()},s.getNid());
         });
 
         edges.values().forEach((s) -> {
@@ -119,10 +129,23 @@ public class CacheTest {
         Random random = new Random();
         CacheEPC cache = new CacheEPC(cacheCapacity);
 
+//        //2. 构建历史路径查询记录
+//        for (int i = 0; i < historicalQueries; i++) {
+//            //vertexs中随机取出两个点，在无向图中查找
+//            GraphPath<Vertex, Edge> path = DijkstraShortestPath.findPathBetween(graph, vertexs.get("" + random.nextInt(vertexs.size())), vertexs.get("" + random.nextInt(vertexs.size())));
+//            cache.getShortestPath().add(new ShortestPath(path));
+//        }
+
         //2. 构建历史路径查询记录
         for (int i = 0; i < historicalQueries; i++) {
-            //vertexs中随机取出两个点，在无向图中查找
-            GraphPath<Vertex, Edge> path = DijkstraShortestPath.findPathBetween(graph, vertexs.get("" + random.nextInt(vertexs.size())), vertexs.get("" + random.nextInt(vertexs.size())));
+//            GraphPath<Vertex, Edge> path = DijkstraShortestPath.findPathBetween(graph, vertexs.get("" + random.nextInt(vertexs.size())), vertexs.get("" + random.nextInt(vertexs.size())));
+//            cache.getShortestPath().add(new ShortestPath(path));
+
+            //pois中随机取出两个点，使用kd-tree找出无向图中的映射点
+            Object nearestO = kdTree.nearest(pois.get(random.nextInt(pois.size())));
+            Object nearestD = kdTree.nearest(pois.get(random.nextInt(pois.size())));
+
+            GraphPath<Vertex, Edge> path = DijkstraShortestPath.findPathBetween(graph, vertexs.get(nearestO.toString()), vertexs.get(nearestD.toString()));
             cache.getShortestPath().add(new ShortestPath(path));
         }
 
@@ -133,9 +156,17 @@ public class CacheTest {
         long taskStartTime = System.currentTimeMillis();
         //4. 执行查询任务
         for (int i = 0; i < pathQueries; i++) {
-            if (cache.findShortestPath(vertexs.get("" + random.nextInt(vertexs.size())), vertexs.get("" + random.nextInt(vertexs.size()))) != null) {
+            //pois中随机取出两个点，使用kd-tree找出无向图中的映射点
+            Object nearestO = kdTree.nearest(pois.get(random.nextInt(pois.size())));
+            Object nearestD = kdTree.nearest(pois.get(random.nextInt(pois.size())));
+
+            if (cache.findShortestPath(vertexs.get(nearestO.toString()), vertexs.get(nearestD.toString())) != null) {
                 count++;
             }
+
+//            if (cache.findShortestPath(vertexs.get("" + random.nextInt(vertexs.size())), vertexs.get("" + random.nextInt(vertexs.size()))) != null) {
+//                count++;
+//            }
         }
         long taskEndTime = System.currentTimeMillis();
         DecimalFormat df = new DecimalFormat("#.####%");

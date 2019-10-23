@@ -15,9 +15,9 @@ Edge-Based Shortest Path Caching for Location-Based Services
 
 ### 1. 构建缓存
 
-1. 利用路网点与路网边构建无向图
+1. 利用路网点与路网边构建无向图、使用路网点构建kd-tree
 2. 从POIs中随机选择起点o与终点d生成历史路径查询
-3. 将路径查询中的起点o与终点d映射到无向图中的顶点o\`与d`
+3. 使用kd-tree将路径查询中的起点o与终点d映射到无向图中最接近的顶点o\`与d`
 4. 使用最短路径算法计算出每条历史查询相对应最短路径（需使用Dijkstra或A*计算最短路径）
 5. 依赖Sharing ability per edge构建缓存
 6. 构建三大序列EII、ENI、EPI并使用R-tree组织序列
