@@ -2,16 +2,20 @@ package com.scu.zclorne;
 
 import org.jgrapht.GraphPath;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 
 public class ShortestPath {
+    String pathID;
     private GraphPath dp;
-    private List<Edge> storeEdge = new ArrayList<>();
-    private int sharingAbility = 1;
-    private List<ShortestPath> canAnswer = new ArrayList<>();
+    private int sharingAbility = 0;
+    private Set<String> canAnswer = new HashSet<>();
     //sharing ability per edge
     private double sape;
+
+    public ShortestPath(String pathID) {
+        this.pathID=pathID;
+    }
 
     public double getSape() {
         return sape;
@@ -21,7 +25,8 @@ public class ShortestPath {
         this.sape = sape;
     }
 
-    ShortestPath(GraphPath dp) {
+    ShortestPath(String pathID, GraphPath dp) {
+        this.pathID = pathID;
         this.dp = dp;
     }
 
@@ -33,11 +38,11 @@ public class ShortestPath {
         this.dp = dp;
     }
 
-    public List<ShortestPath> getCanAnswer() {
+    public Set<String> getCanAnswer() {
         return canAnswer;
     }
 
-    public void setCanAnswer(List<ShortestPath> canAnswer) {
+    public void setCanAnswer(Set<String> canAnswer) {
         this.canAnswer = canAnswer;
     }
 
@@ -46,7 +51,11 @@ public class ShortestPath {
     }
 
     double calculateSAPE() {
-        return sape = sharingAbility * 1.0 / dp.getEdgeList().size();
+        int edgeSize = dp.getEdgeList().size();
+        if (edgeSize == 0) {
+            return sape = -1;
+        }
+        return sape = sharingAbility * 1.0 / edgeSize;
     }
 
     /**
@@ -54,6 +63,7 @@ public class ShortestPath {
      * s的起点与终点只要均在当前最短路径的点集中即为包含返回true
      */
     boolean isCoverPath(ShortestPath s) {
+
         return this.dp.getVertexList().contains(s.getDp().getStartVertex())
                 && this.dp.getVertexList().contains(s.getDp().getEndVertex());
     }
@@ -67,9 +77,32 @@ public class ShortestPath {
     void analysisWithOtherPath(ShortestPath s) {
         if (isCoverPath(s)) {
             incrementSA();
-            canAnswer.add(s);
+            canAnswer.add(s.getPathID());
         }
     }
 
+    public int getSharingAbility() {
+        return sharingAbility;
+    }
 
+    @Override
+    public int hashCode() {
+        return pathID.hashCode();
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof ShortestPath) {
+            return ((ShortestPath) obj).pathID==pathID;
+        }
+        return false;
+    }
+
+    public String getPathID() {
+        return pathID;
+    }
+
+    public void setPathID(String pathID) {
+        this.pathID = pathID;
+    }
 }

@@ -1,0 +1,2 @@
+------------------------2019-11-09 16:43:08-----------------------------
+type:single test --- historical queries: 10000, cache capacity: 500000 , queries: 3000.  cache hit ratio: 99.9% , response time: 72094 ms.
