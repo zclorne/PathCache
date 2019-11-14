@@ -81,7 +81,6 @@ public class CacheEPC {
             for (String s : selected.getCanAnswer()) {
                 shortestPath.remove(new ShortestPath(s));
             }
-//            selected.getCanAnswer().forEach(shortestPath::remove);
             //sortedPath已空
             if (shortestPath.isEmpty()) break;
         }
@@ -97,7 +96,6 @@ public class CacheEPC {
     void addThreeIndex(ShortestPath path) {
         Edge cur;
         Edge pre = null;
-//        for (ShortestPath p : cache) {
         for (Object e : path.getDp().getEdgeList()) {
             cur = (Edge) e;
             String curEid = cur.getEid();
@@ -130,7 +128,6 @@ public class CacheEPC {
                 size++;
             }
         }
-//        }
     }
 
     /**
@@ -153,8 +150,9 @@ public class CacheEPC {
         }
     }
 
-        int canLocate = 0;
-        int notCanLocate = 0;
+    int canLocate = 0;
+    int notCanLocate = 0;
+
     /**
      * 使用缓存进行尝试应答
      *
@@ -173,12 +171,24 @@ public class CacheEPC {
             // 终点映射的候选边所在最短路径
             List<String> dEdgePath = new ArrayList<>();
             for (Entry<String, Geometry> oEntry : oEntries) {
-//                oEdge.add(oEntry.value());
-                oEdgePath.addAll(EPI.get(oEntry.value()));
+                Edge edge = EII.get(oEntry.value());
+                Vertex oV = edge.getO();
+                Vertex dV = edge.getD();
+                // /oVo/+/odV/-/oVdV/<0.000001
+                if (claculateDistance(oV, o) + claculateDistance(o, dV) -
+                        claculateDistance(oV, dV) < 0.000001) {
+                    oEdgePath.addAll(EPI.get(oEntry.value()));
+                }
             }
             for (Entry<String, Geometry> dEntry : dEntries) {
-//                dEdge.add(dEntry.value());
-                dEdgePath.addAll(EPI.get(dEntry.value()));
+                Edge edge = EII.get(dEntry.value());
+                Vertex oV = edge.getO();
+                Vertex dV = edge.getD();
+                // /oVo/+/odV/-/oVdV/<0.000001
+                if (claculateDistance(oV, d) + claculateDistance(d, dV) -
+                        claculateDistance(oV, dV) < 0.000001) {
+                    dEdgePath.addAll(EPI.get(dEntry.value()));
+                }
             }
 
             // 交集检测是否有同一路径
@@ -188,10 +198,21 @@ public class CacheEPC {
                 return true;
             }
 
-        }else {
+        } else {
             notCanLocate++;
         }
         return false;
+    }
+
+    /**
+     * calculate the distance between two vertices
+     *
+     * @param v1 vertex1
+     * @param v2 vertex2
+     * @return distance
+     */
+    double claculateDistance(Vertex v1, Vertex v2) {
+        return Math.sqrt(Math.pow(v1.getLongitude() - v2.getLongitude(), 2) + Math.pow(v1.getLatitude() - v2.getLatitude(), 2));
     }
 
     /**
@@ -212,7 +233,7 @@ public class CacheEPC {
             tree = tree.add(e.getEid(), Geometries.rectangle(x1, y1, x2, y2));
         }
 
-        tree.visualize(800,800).save(System.getProperty("user.dir") + "/src/main/resources/mytree.png");
+        tree.visualize(800, 800).save(System.getProperty("user.dir") + "/src/main/resources/mytree.png");
     }
 
     /**
@@ -226,26 +247,5 @@ public class CacheEPC {
         Iterable<Entry<String, Geometry>> entries = tree.search(Geometries.pointGeographic(longitude, latitude))
                 .toBlocking().toIterable();
         return entries;
-    }
-
-    /**
-     * 缓存的最短路径条数
-     *
-     * @return
-     */
-    int cacheShortestSize() {
-        return cache.size();
-    }
-
-    int EIISize() {
-        return EII.size();
-    }
-
-    int ENISize() {
-        return ENI.size();
-    }
-
-    int EPISize() {
-        return EPI.size();
     }
 }

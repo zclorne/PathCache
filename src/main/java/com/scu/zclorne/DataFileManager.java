@@ -78,9 +78,8 @@ public class DataFileManager implements DataManager {
      * read POI information from file
      */
     public List<double[]> readPOI() throws IOException {
-        String filePath = System.getProperty("user.dir") + dataDir + "California's Points of Interest (Longitude, Latitude, Category ID).txt";
+        String filePath = System.getProperty("user.dir") + dataDir + "poi_mapping.txt";
         BufferedReader in = null;
-//        int count = 0;
         List<double[]> pois = new ArrayList<>(110000);
         try {
             in = new BufferedReader(new FileReader(filePath));
@@ -89,7 +88,6 @@ public class DataFileManager implements DataManager {
             while ((str = in.readLine()) != null) {
                 strings = str.split(" ");
                 pois.add(new double[]{Double.parseDouble(strings[0]),Double.parseDouble(strings[1])});
-//                count++;
             }
         } catch (IOException e) {
             e.printStackTrace();
