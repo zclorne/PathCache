@@ -5,6 +5,7 @@ import com.github.davidmoten.rtree.RTree;
 import com.github.davidmoten.rtree.geometry.Geometries;
 import com.github.davidmoten.rtree.geometry.Geometry;
 
+import java.text.DecimalFormat;
 import java.util.*;
 
 public class CacheEPC {
@@ -14,7 +15,6 @@ public class CacheEPC {
     private HashMap<String, Set<String>> ENI = new HashMap<>();
     private HashMap<String, Set<String>> EPI = new HashMap<>();
     private List<ShortestPath> shortestPath = new ArrayList<>();//历史路径查询及结果
-    private List<ShortestPath> cache = new ArrayList<>();
     private RTree<String, Geometry> tree;
 
     public CacheEPC(int cacheCapacity) {
@@ -57,14 +57,7 @@ public class CacheEPC {
      */
     void buildCache() {
         calculateSharingAbility();
-
-        HashSet<String> shortests = new HashSet<>();
-        for (ShortestPath shortestPath : shortestPath) {
-            shortests.addAll(shortestPath.getCanAnswer());
-        }
-        System.out.println("子路径条数：" + shortests.size());
-        System.out.println("最短路径条数：" + shortestPath.size());
-        System.out.println(shortests.size() * 1.0 / 10000);
+        calSubpPer();
 
         //将路径按边数（也就是节点数，节点数=边数+1）排序
 //        List<ShortestPath> sortedPath = shortestPath.stream().sorted(Comparator.comparingInt(o -> o.getDp().getEdgeList().size())).collect(Collectors.toList());
@@ -84,7 +77,21 @@ public class CacheEPC {
             //sortedPath已空
             if (shortestPath.isEmpty()) break;
         }
+        shortestPath.clear();
+    }
 
+    /**
+     * 计算子路径百分比
+     */
+    private void calSubpPer() {
+        HashSet<String> shortests = new HashSet<>();
+        for (ShortestPath shortestPath : shortestPath) {
+            shortests.addAll(shortestPath.getCanAnswer());
+        }
+        System.out.println("子路径条数：" + shortests.size());
+        System.out.println("最短路径条数：" + shortestPath.size());
+        DecimalFormat df = new DecimalFormat("#.####%");
+        System.out.println(df.format(shortests.size() * 1.0 / shortestPath.size()));
     }
 
     /**
@@ -167,9 +174,11 @@ public class CacheEPC {
         if (oEntries.iterator().hasNext() && dEntries.iterator().hasNext()) {
             canLocate++;
             // 起点映射的候选边所在最短路径
-            List<String> oEdgePath = new ArrayList<>();
+            HashSet<String> oEdgePath = new HashSet<>();
             // 终点映射的候选边所在最短路径
-            List<String> dEdgePath = new ArrayList<>();
+            HashSet<String> dEdgePath = new HashSet<>();
+            List<String> oEdges = new ArrayList<>();
+            List<String> dEdges = new ArrayList<>();
             for (Entry<String, Geometry> oEntry : oEntries) {
                 Edge edge = EII.get(oEntry.value());
                 Vertex oV = edge.getO();
@@ -177,6 +186,7 @@ public class CacheEPC {
                 // /oVo/+/odV/-/oVdV/<0.000001
                 if (claculateDistance(oV, o) + claculateDistance(o, dV) -
                         claculateDistance(oV, dV) < 0.000001) {
+                    oEdges.add(oEntry.value());
                     oEdgePath.addAll(EPI.get(oEntry.value()));
                 }
             }
@@ -187,6 +197,7 @@ public class CacheEPC {
                 // /oVo/+/odV/-/oVdV/<0.000001
                 if (claculateDistance(oV, d) + claculateDistance(d, dV) -
                         claculateDistance(oV, dV) < 0.000001) {
+                    dEdges.add(dEntry.value());
                     dEdgePath.addAll(EPI.get(dEntry.value()));
                 }
             }
@@ -194,7 +205,43 @@ public class CacheEPC {
             // 交集检测是否有同一路径
             oEdgePath.retainAll(dEdgePath);
             if (!oEdgePath.isEmpty()) {
+                List<Edge> resultEdges = new ArrayList<>();
                 // 从路径中截取对应起点终点的最短路径
+                // 得到pID
+                String pathID = oEdgePath.iterator().next();
+                String oEStr = "";
+                String dEStr = "";
+                // 得到起始边与终点边
+                for (String oEdge : oEdges) {
+                    if (EPI.get(oEdge).contains(pathID)) {
+                        oEStr = oEdge;
+                        break;
+                    }
+                }
+                for (String dEdge : dEdges) {
+                    if (EPI.get(dEdge).contains(pathID)) {
+                        dEStr = dEdge;
+                        break;
+                    }
+                }
+
+                LinkedList<String> stack = new LinkedList<>();
+                HashSet<String> hasVisitedEdge = new HashSet<>();
+                stack.push(oEStr);
+                hasVisitedEdge.add(oEStr);
+                while (!stack.isEmpty()) {
+                    String cur = stack.pop();
+                    for (String s : ENI.get(cur)) {
+                        if (s.equals(dEStr)) {
+                            break;
+                        }
+                        if (EPI.get(s).contains(pathID) &&
+                                (!hasVisitedEdge.contains(s))) {
+                            stack.push(s);
+                        }
+                        hasVisitedEdge.add(s);
+                    }
+                }
                 return true;
             }
 
