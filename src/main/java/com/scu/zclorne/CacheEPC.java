@@ -83,7 +83,7 @@ public class CacheEPC {
     /**
      * 计算子路径百分比
      */
-    private void calSubpPer() {
+    void calSubpPer() {
         HashSet<String> shortests = new HashSet<>();
         for (ShortestPath shortestPath : shortestPath) {
             shortests.addAll(shortestPath.getCanAnswer());
@@ -183,9 +183,10 @@ public class CacheEPC {
                 Edge edge = EII.get(oEntry.value());
                 Vertex oV = edge.getO();
                 Vertex dV = edge.getD();
-                // /oVo/+/odV/-/oVdV/<0.000001
-                if (claculateDistance(oV, o) + claculateDistance(o, dV) -
-                        claculateDistance(oV, dV) < 0.000001) {
+                // |oV-o| + |o-dV|< 1.05 * |oV-dV|
+                if (DistanceUtils.getDistance(oV.getLongitude(), oV.getLatitude(), o.getLongitude(), o.getLatitude()) +
+                        DistanceUtils.getDistance(o.getLongitude(), o.getLatitude(), dV.getLongitude(), dV.getLatitude()) <
+                        1.05 * DistanceUtils.getDistance(oV.getLongitude(), oV.getLatitude(), dV.getLongitude(), dV.getLatitude())) {
                     oEdges.add(oEntry.value());
                     oEdgePath.addAll(EPI.get(oEntry.value()));
                 }
@@ -194,9 +195,10 @@ public class CacheEPC {
                 Edge edge = EII.get(dEntry.value());
                 Vertex oV = edge.getO();
                 Vertex dV = edge.getD();
-                // /oVo/+/odV/-/oVdV/<0.000001
-                if (claculateDistance(oV, d) + claculateDistance(d, dV) -
-                        claculateDistance(oV, dV) < 0.000001) {
+                // |oV-d| + |d-dV|< 1.05 * |oV-dV|
+                if (DistanceUtils.getDistance(oV.getLongitude(), oV.getLatitude(), d.getLongitude(), d.getLatitude()) +
+                        DistanceUtils.getDistance(d.getLongitude(), d.getLatitude(), dV.getLongitude(), dV.getLatitude()) <
+                        1.05 * DistanceUtils.getDistance(oV.getLongitude(), oV.getLatitude(), dV.getLongitude(), dV.getLatitude())) {
                     dEdges.add(dEntry.value());
                     dEdgePath.addAll(EPI.get(dEntry.value()));
                 }
@@ -249,17 +251,6 @@ public class CacheEPC {
             notCanLocate++;
         }
         return false;
-    }
-
-    /**
-     * calculate the distance between two vertices
-     *
-     * @param v1 vertex1
-     * @param v2 vertex2
-     * @return distance
-     */
-    double claculateDistance(Vertex v1, Vertex v2) {
-        return Math.sqrt(Math.pow(v1.getLongitude() - v2.getLongitude(), 2) + Math.pow(v1.getLatitude() - v2.getLatitude(), 2));
     }
 
     /**

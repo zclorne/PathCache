@@ -12,7 +12,7 @@ import java.util.List;
 
 public class DataBeiJing implements DataManager {
 
-    String dataDir = "/src/main/resources/";
+    String dataDir = "/src/main/resources/beijing/";
     String dataFile = "TestResult.txt";
 
     @Override
@@ -39,8 +39,8 @@ public class DataBeiJing implements DataManager {
             String str;
             String[] strings;
             while ((str = in.readLine()) != null) {
-                strings = str.split(" ");
-                vertexMap.put(strings[0], new Vertex(strings[0], Double.parseDouble(strings[1]), Double.parseDouble(strings[2])));
+                strings = str.split("\t");
+                vertexMap.put(strings[0], new Vertex(strings[0], Double.parseDouble(strings[2]), Double.parseDouble(strings[1])));
             }
         } catch (IOException e) {
             e.printStackTrace();
@@ -60,7 +60,7 @@ public class DataBeiJing implements DataManager {
             String str;
             String[] strings;
             while ((str = in.readLine()) != null) {
-                strings = str.split(" ");
+                strings = str.split("\t");
                 edgeMap.put(strings[0], new Edge(strings[0], vMap.get(strings[1]), vMap.get(strings[2]), Double.parseDouble(strings[3])));
             }
         } catch (IOException e) {
@@ -73,6 +73,7 @@ public class DataBeiJing implements DataManager {
 
     @Override
     public List<double[]> readPOI() throws IOException {
+//        String filePath = System.getProperty("user.dir") + dataDir + "poi_mapping.txt";
         String filePath = System.getProperty("user.dir") + dataDir + "queries.csv";
         BufferedReader in = null;
         List<double[]> pois = new ArrayList<>(110000);
@@ -82,7 +83,8 @@ public class DataBeiJing implements DataManager {
             String[] strings;
             while ((str = in.readLine()) != null) {
                 strings = str.split(" ");
-                pois.add(new double[]{Double.parseDouble(strings[0]), Double.parseDouble(strings[1])});
+                pois.add(new double[]{Double.parseDouble(strings[1]), Double.parseDouble(strings[2]),
+                        Double.parseDouble(strings[3]), Double.parseDouble(strings[4])});
             }
         } catch (IOException e) {
             e.printStackTrace();
